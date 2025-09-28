@@ -1,0 +1,83 @@
+/* static/css/styles.css */
+html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+.container { padding: 12px; height: 100%; display: flex; flex-direction: column; gap: 10px; }
+h1 { margin: 0 0 4px 0; }
+
+/* Header row */
+.header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.challenge-toggle { padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; }
+.challenge-toggle:hover { background: #764ba2; }
+h2 { margin: 0 0 8px 0; font-size: 1.3em; }
+#map { flex: 1; min-height: 400px; border-radius: 12px; overflow: hidden; }
+#log { height: 140px; overflow:auto; border: 1px solid #ddd; border-radius: 8px; padding: 8px; background: #fafafa; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+#trace-form { display: flex; gap: 8px; }
+#trace-form input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid #bbb; }
+#trace-form button, button { padding: 8px 12px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; cursor: pointer; }
+button:hover { background: #333; }
+button:disabled { background: #666; cursor: not-allowed; }
+.info { display:flex; align-items:center; gap: 10px; }
+.info .spacer { flex: 1; }
+
+/* Player section */
+.player-section { padding: 12px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px; }
+.player-info { display: flex; align-items: center; gap: 12px; }
+.player-register { display: flex; gap: 8px; }
+.player-register input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid #bbb; }
+
+/* Challenge section */
+.challenge-section { padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; margin-bottom: 8px; }
+.challenge-active p { margin: 4px 0; }
+.challenge-active code { background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px; }
+.challenge-countdown { font-size: 1.2em; margin-top: 8px; font-weight: bold; }
+.challenge-none { text-align: center; opacity: 0.8; }
+
+/* Modal */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+.modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 12px; position: relative; }
+.close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; position: absolute; right: 20px; top: 10px; }
+.close:hover, .close:focus { color: black; }
+
+/* Scoreboard */
+#scoreboard-content { max-height: 400px; overflow-y: auto; margin: 16px 0; }
+.score-entry { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; gap: 12px; }
+.score-entry:hover { background: #f8f9fa; }
+.score-entry.waiting { opacity: 0.7; background: #f8f9ff; }
+.score-entry.waiting:hover { background: #eef2ff; }
+.score-rank { font-size: 1.5em; font-weight: bold; min-width: 40px; }
+.score-rank.gold { color: #FFD700; }
+.score-rank.silver { color: #C0C0C0; }
+.score-rank.bronze { color: #CD7F32; }
+.score-details { flex: 1; }
+.score-name { font-weight: bold; }
+.score-info { font-size: 0.9em; color: #666; }
+.score-points { font-size: 1.2em; font-weight: bold; color: #667eea; }
+
+/* Race indicators */
+.race-success { background: #2b8a3e; color: white; padding: 12px; border-radius: 8px; margin: 8px 0; text-align: center; }
+.race-failed { background: #dc3545; color: white; padding: 12px; border-radius: 8px; margin: 8px 0; text-align: center; }
+
+/* pulsing dot */
+.pulse {
+  width: 14px; height: 14px; background: #2b8a3e; border-radius: 50%; position: relative; box-shadow: 0 0 0 rgba(43,138,62, 0.8);
+  animation: pulse 2s infinite;
+  border: 2px solid white;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(43,138,62, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(43,138,62, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(43,138,62, 0); }
+}
+
+/* Target marker */
+.target-marker {
+  width: 20px; height: 20px; background: #dc3545; border-radius: 50%; position: relative;
+  animation: pulse-target 2s infinite;
+  border: 3px solid white;
+}
+@keyframes pulse-target {
+  0% { box-shadow: 0 0 0 0 rgba(220,53,69, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(220,53,69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220,53,69, 0); }
+}
+
+.leaflet-tooltip.my-tooltip { background: #111; color: #fff; border: none; border-radius: 6px; }

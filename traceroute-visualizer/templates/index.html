@@ -1,0 +1,94 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Traceroute Visualizer</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <link rel="stylesheet" href="/static/css/styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="header-row">
+      <h1>Traceroute Visualizer</h1>
+      <button id="challenge-toggle-btn" type="button" class="challenge-toggle">
+        {% if challenge %}Hide Challenge Mode{% else %}Show Challenge Mode{% endif %}
+      </button>
+    </div>
+    
+    <!-- Player Registration -->
+    <div id="player-section" class="player-section">
+      {% if player %}
+        <div class="player-info">
+          <span>Player: <strong>{{ player.display_name }}</strong></span>
+          <button id="change-name-btn" type="button">Change Name</button>
+        </div>
+      {% else %}
+        <div class="player-register">
+          <input id="player-name" type="text" placeholder="Enter your display name" maxlength="30" />
+          <button id="register-btn" type="button">Join Race</button>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Challenge Info -->
+    <div id="challenge-section" class="challenge-section" {% if not challenge %}style="display: none;"{% endif %}>
+      {% if challenge %}
+        <div class="challenge-active">
+          <h2>Mystery Location Challenge</h2>
+          <p><strong>Secret destination challenge is active!</strong></p>
+          <p>Target any hostname or IP - try to get as close as possible to the mystery location</p>
+          <p>Hint: Try hosts in different regions and countries</p>
+          <div class="challenge-countdown" id="countdown"></div>
+        </div>
+      {% else %}
+        <div class="challenge-none">
+          <p>No active challenge. Waiting for next race...</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Race Controls -->
+    <form id="trace-form">
+      <input id="target" type="text" placeholder="Any hostname or IP (try JP hosts for best results)" value="8.8.8.8" />
+      <button type="submit" id="race-btn">Trace</button>
+      <button type="button" id="scoreboard-btn">View Scoreboard</button>
+    </form>
+
+    <div class="info">
+      <span>Status: <strong id="status">Idle</strong></span>
+      <span class="spacer"></span>
+      <span>Your location: 
+        <strong id="me-loc">
+          {% if me and me.city %}{{ me.city }}, {{ me.country }}{% else %}Unknown{% endif %}
+        </strong>
+      </span>
+    </div>
+
+    <!-- Scoreboard Modal -->
+    <div id="scoreboard-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Scoreboard</h2>
+        <div id="scoreboard-content">Loading...</div>
+        <button id="download-btn" type="button">Download Results</button>
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    const ME = {{ (me or {})|tojson }};
+    const PLAYER = {{ (player or {})|tojson }};
+    const CHALLENGE = {{ (challenge or {})|tojson }};
+  </script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
