@@ -214,8 +214,8 @@ def run_traceroute(target: str, max_hops: int = 30, timeout_ms: int = 700) -> It
         proc.wait()
 
     else:
-        # Unix traceroute: -n numeric, -q 1 one probe per hop, -w timeout(sec), -m max hops, -4 IPv4
-        cmd = ["traceroute", "-n", "-q", "1", "-w", str(max(1, timeout_ms // 1000)), "-m", str(max_hops), "-4", target]
+        # Unix traceroute: -n numeric, -q 1 one probe per hop, -w timeout(sec), -m max hops
+        cmd = ["traceroute", "-n", "-q", "1", "-w", str(max(1, timeout_ms // 1000)), "-m", str(max_hops), target]
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="ignore")
         for line in proc.stdout:
             # lines like: " 1  192.168.1.1  1.123 ms"
